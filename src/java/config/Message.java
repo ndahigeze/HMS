@@ -16,12 +16,12 @@ public class Message {
    
     public static void succes(String summary,String details){
      FacesContext fc=FacesContext.getCurrentInstance();
-     fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, details));
+     fc.addMessage(details, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, details));
     }
     
     public static void failure(String summary,String details){
      FacesContext fc=FacesContext.getCurrentInstance();
-     fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,summary,details));
+     fc.addMessage(details, new FacesMessage(FacesMessage.SEVERITY_INFO,summary,details));
     }
    
 }

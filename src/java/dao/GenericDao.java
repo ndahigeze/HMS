@@ -26,7 +26,7 @@ public class GenericDao<X> {
             s.close();
             return "Saved";
         }catch(Exception ex){
-            return "not Saved"+ex.getMessage();
+            return ""+ex.getMessage();
         }
     }
     

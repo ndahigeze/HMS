@@ -5,12 +5,12 @@
  */
 package dao;
 
-import domain.Users;
+import domain.Booking;
 
 /**
  *
  * @author Ndahigeze
  */
-public class StudentDao extends GenericDao<Users>{
+public class BookingDao extends GenericDao<Booking>{
     
 }

@@ -44,11 +44,11 @@
                                 <table style="width: 100%;">
                                     <tr>
                                         <td><label>Username</label></td>
-                                        <td><b:inputText id="username" value="#{userModel.code}" style="height: 30px"></b:inputText></td>
+                                        <td><b:inputText id="username" value="#{userModel.username}" style="height: 30px"></b:inputText></td>
                                     </tr>
                                     <tr>
                                         <td><label>Password</label></td>
-                                        <td><b:inputText id="password" value="#{userModel.password}" style="height: 30px"></b:inputText></td>
+                                        <td><b:inputText type="password" id="password" value="#{userModel.password}" style="height: 30px"></b:inputText></td>
                                     </tr>
                                     <tr>
                                         <p:messages autoUpdate="true" />
@@ -62,47 +62,42 @@
                 </div>
             </div>   
             <div class="row" id="row2">
-                <div class="col-md-4 offset-4">
-                    <h:form >
+                <div class="col-md-5 offset-4">
+                    <h:form id="reg">
                         <div class="card">
                             <div class="card-header">
-                                Register
+                                Create Account
                             </div>
                             <div class="card-body">
+                                <p:growl autoUpdate="true"/>
                                 <p:panel toggleable="true"  id="register">
-                                    <p:messages autoUpdate="true" />
-                                    <h:panelGrid columns="2" style="width: 100%;">
-                                        <label for="sid">ID</label>
-                                        <b:inputText style="height: 30px" value="#{userModel.user.id}" required="true" required-message="Student Id is Required"/>
+                                    <p:messages for="reg"/>
+                                    <h:panelGrid columns="3" style="width: 100%;">
+                                        
+                                        <label>Username</label>
+                                        <b:inputText id="un" style="height: 30px" value="#{userModel.user.username}" required="true" required-message="This is Required"/>
+                                        <p:messages for="un" />
                                         <label>First Name</label>
                                         <b:inputText id="fname" style="height: 30px" value="#{userModel.user.fname}" required="true" required-message="This is Required"/>
+                                        <p:messages for="fname" />
                                         <label>Last Name</label>
                                         <b:inputText id="lname" style="height: 30px" value="#{userModel.user.lname}" required="true" required-message="This is Required"/>
+                                        <p:messages for="lname" />
                                         <label>Phone</label>
                                         <b:inputText id="phone" style="height: 30px" value="#{userModel.user.phone}" required="true" required-message="This is Required"/>
+                                         <p:messages for="phone" />
                                         <label>Birth Date</label>
-                                        <p:inputText type="date" converter="dateConverter" id="button" value="#{userModel.user.dob}" required="true" requiredMessage="This is Required" />
-                                        <label>Province</label>
-                                        <b:selectOneMenu id="dep" value="#{districtModel.pid}" required="true" style="height: 30px" required-message="This is Required">
-                                            <f:selectItem itemLabel="(Please select)" />
-                                            <f:selectItems value="#{provinceModel.provinces}" var="pr" itemLabel="#{pr.provincename}"  itemValue="#{pr.provincecode}"/>
-                                            <f:ajax render="district" listener="#{districtModel.byProvince()}"/>
-                                        </b:selectOneMenu>
-                                        <label>District</label>
-                                        <b:selectOneMenu value="#{sectorModel.did}"
-                                                         id="district" required="true" style="height: 30px" required-message="This is Required">
-                                            <f:selectItems value="#{districtModel.ds}" var="dist" itemLabel="#{dist.namedistrict}"/>
-                                            <f:ajax render="sector" listener="#{sectorModel.byDistrict()}"/>
-                                        </b:selectOneMenu>
-                                        <label>Sector</label>
-                                        <b:selectOneMenu value="#{userModel.dic}" id="sector" style="height: 30px" required-message="This is Required">
-                                            <f:selectItems value="#{sectorModel.ds}" var="sect" itemLabel="#{sect.namesector}"/>
-                                        </b:selectOneMenu> 
-
+                                        <p:inputText type="date" converter="dateConverter" id="dob" value="#{userModel.user.dob}" required="true" requiredMessage="This is Required" />
+                                        <p:messages for="dob" />
+                                        <label>Address</label>
+                                        <b:inputText type="text" id="address" value="#{userModel.user.address}" required="true" requiredMessage="This is Required" />
+                                       <p:messages for="address" />
                                         <label>Password</label>
-                                        <b:inputText type="password" style="height: 30px" value="#{userModel.user.pasword}" required="true" required-message="This is Required"/>
+                                        <b:inputText type="password" id="psw" style="height: 30px" value="#{userModel.user.password}" required="true" required-message="This is Required"/>
+                                         <p:messages for="psw" />
                                         <label>Confirm Password</label>
-                                        <b:inputText  type="password" style="height: 30px" value="#{userModel.ps}" required="true"/>
+                                        <b:inputText id="cpsw" type="password" style="height: 30px" value="#{userModel.ps}" required="true"/>
+                                         <p:messages for="cpsw" />
                                         <b:commandButton value="Register" update="register" class="btn btn-primary" action="#{userModel.recordUser()}"/>
                                     </h:panelGrid>
                                 </p:panel>

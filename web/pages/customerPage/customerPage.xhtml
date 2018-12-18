@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>TODO supply a title</title>
+        <link href="#{request.contextPath}/css/bootstrap-material.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/css/myStyle.css" rel="stylesheet" type="text/css"/>
+
+        <script src="#{request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="#{request.contextPath}/js/Myjs.js" type="text/javascript"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body  style="font-size: 15px">
+        <h:form id="head">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                <a class="navbar-brand" href="#"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item" id="register">
+                            <a class="nav-link" href="#"></a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+
+                        <li classs="nav-item active">
+                            <b:commandButton action="#{userModel.logout()}" value="Logout"  class="btn btn-info"/>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </h:form>
+        <div class="container-fluid" id="container">
+            <section id="rowfaculty">
+                <div class="card bg-primary text-white text-center mt-3">
+                    <span style="font-size: 25px;font-family: 'Times New Romans';">Make a booking and see the rooms booked by you</span>
+                </div>
+               
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-header bg-primary">Book the Room</div>
+                            <div class="card-body">
+                                <h:form id="recorded">
+                                     <b:messages for="recorded" />
+                                    <p:panel toggleable="true" id="record">
+                                        <h:panelGrid columns="3">
+                                            <label for="ds">Hotel</label>
+                                            <b:selectOneMenu id="p" value="#{roomModel.h}" required="true" style="height: 30px" required-message="Required">
+                                                <f:selectItem itemLabel="--Select Hotel--" />
+                                                <f:selectItems value="#{hotelModel.hotels}" var="pr"  itemLabel="#{pr.name}"  itemValue="#{pr.id}"/>
+                                                <f:ajax render="d" listener="#{roomModel.byHotel()}"/>
+                                            </b:selectOneMenu>
+                                            <b:message for="p"/>
+                                            <label>Room Number</label>
+                                            <b:selectOneMenu value="#{bookingModel.dist}"
+                                                             id="d" required="true" style="height: 30px" required-message="This is Required">
+                                                <f:selectItems value="#{roomModel.byp}" var="dist" itemLabel="#{dist.roomno}"/>                            
+                                            </b:selectOneMenu>
+                                            <b:message for="d"/>                                           
+                                            <label>When to take The Room</label>
+                                            <b:datepicker id="cd" style="height: 30px" value="#{bookingModel.booking.checkingdate}" required="true" required-message="Required"/>
+                                            <b:message for="cd"/>
+                                            <label>Staying Date</label>
+                                            <b:inputText type="number" id="sd" style="height: 30px" value="#{bookingModel.booking.stayindays}" required="true" required-message="Required"/>
+                                            <b:message for="sd"/>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                    <td><b:commandButton class="btn-lg btn-primary mt-3" value="Make Booking" action="#{bookingModel.recordBooking()}" update="roomList,recorded,bookings"></b:commandButton></td>
+                                </h:form>
+                            </div>
+                            <div class="card-footer"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h:form id="bookings">
+                            <div class="card">
+                                <div class="card-header bg-info">
+                                    <div class="row">
+                                        <div class="col">Booking Lists</div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <b:dataTable value="#{bookingModel.bookings}" var="u" searching="true" pdf="true" csv="true">
+                                        <b:dataTableColumn value="#{u.rooms.hotel.name}" label="Hotel"/>
+                                        <b:dataTableColumn value="#{u.rooms}" label="Room Number"/>
+                                        <b:dataTableColumn value="#{u.stayindays}" label="Day room is Ocupied"/>
+                                        <b:dataTableColumn value="#{u.checkingdate}" label="Date Entered"/>
+                                    </b:dataTable>
+
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </section>
+            <section class="mt-3">
+                <div class="card bg-primary text-white text-center">
+                    <span class="" style="font-size: 25px;font-family: 'Times New Romans';"> Rooms and Books list</span>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <h:form id="hotels">
+                            <div class="card">
+                                <div class="card-header bg-info">
+                                    <div class="row">
+                                        <div class="col">Hotel List</div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <b:dataTable value="#{hotelModel.hotels}" var="u" searching="true" pdf="true" csv="true">
+                                        <b:dataTableColumn value="#{u.name}" label="Hotel Name"/>
+                                        <b:dataTableColumn value="#{u.email}" label="Hotel Email"/>
+                                        <b:dataTableColumn value="#{u.phone}" label="Hotel Phone"/>
+                                        <b:dataTableColumn value="#{u.address.province.provincename}" label="Province Location"/>
+                                        <b:dataTableColumn value="#{u.address.namedistrict}" label="District"/>
+                                        <b:dataTableColumn label="Show Room">
+                                            <b:commandButton action="#{roomModel.find(u.name)}" update="roomList" class="btn btn-info" value="Find Room"></b:commandButton>
+                                        </b:dataTableColumn>
+                                    </b:dataTable>
+
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
+                        </h:form>
+                    </div>
+                    <div class="col">
+                        <h:form id="roomList">
+                            <div class="card">
+                                <div class="card-header bg-info">
+                                    <div class="row">
+                                        <div class="col">Room</div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+
+                                    <b:dataTable value="#{roomModel.rooms}" var="k" searching="true" pdf="true" csv="true">
+                                        <b:dataTableColumn value="#{k.roomno}" label="Room Number"/>
+                                        <b:dataTableColumn value="#{k.description}" label="Description"/>
+                                        <b:dataTableColumn value="#{k.price} RWF" label="Price" />
+                                        <b:dataTableColumn value="#{k.hotel.name}" label="Hotel"/>           
+                                        <b:dataTableColumn label="Edit" >
+                                            <b:commandButton action="#{roomModel.setupdate(u)}" class="btn btn-info"  value="Edit"></b:commandButton>
+                                        </b:dataTableColumn>
+                                    </b:dataTable>
+
+                                </div>
+                                <div class="card-footer"></div>
+                            </div> 
+                        </h:form>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+        <script src="#{request.contextPath}/js/jquery-2.2.4.js" type="text/javascript"></script>
+    </h:body>
+</html>

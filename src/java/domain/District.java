@@ -6,7 +6,6 @@
 package domain;
 
 import domain.Province;
-import domain.Sector;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -20,14 +19,14 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class District implements Serializable {
+
+    @OneToMany(mappedBy = "address")
+    private List<Hotel> hotels;
     @Id
     private String districtcode;
     private String namedistrict;
     @ManyToOne
     private Province province;
-    @OneToMany(mappedBy = "district")
-    private List<Sector> sector;
-
     public String getDistrictcode() {
         return districtcode;
     }
@@ -52,14 +51,6 @@ public class District implements Serializable {
         this.province = province;
     }
 
-    public List<Sector> getSector() {
-        return sector;
-    }
-
-    public void setSector(List<Sector> sector) {
-        this.sector = sector;
-    }
- 
     @Override
     public String toString(){
      return districtcode;

@@ -7,11 +7,26 @@
 $(document).ready(function(){
     $("#login").click(function(){
         
-        $("#row2").slideUp();
-        $("#row1").slideDown();
+        $("#row2").hide();
+        $("#row1").show();
     });
      $("#register").click(function(){
-        $("#row1").slideUp();
-        $("#row2").slideDown();
+        $("#row1").hide();
+        $("#row2").show();
+    });
+    $("#hotel").click(function(){
+        $("#courseAdd").slideDown();
+        $("#hotelRoom").slideUp();
+        $("#book").slideUp();
+    });
+     $("#rooms").click(function(){
+         $("#courseAdd").slideUp();
+        $("#hotelRoom").slideDown(); 
+         $("#book").slideUp();
+    });
+     $("#booking").click(function(){
+         $("#courseAdd").hide();
+           $("#book").slideDown();
+         $("#hotelRoom").hide();  
     });
 });

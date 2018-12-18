@@ -13,14 +13,14 @@ and open the template in the editor.
 #sid{
     height: 20px;
 }
-/*#rowfaculty{
+#rowfaculty{
  height: 400px;
  overflow: auto;
 }
 #department{
    height: 400px;
    overflow: auto; 
-}*/
+}
 .sidelinks a{
     text-decoration: none;
     display: inline;
@@ -36,11 +36,19 @@ and open the template in the editor.
      padding-bottom: 5px;
 }
 #sideBar{
+    position: fixed;
     height: 100vh;
     background-color: #2E2E2E;
+    z-index: 1000;
 }
 #container{
     position: relative;
     top:80px;
+}
+#hotelRoom{
+   display: none;
+}  
+#book{
+  display: none; 
 }
 

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>course</title>
+        <link href="#{request.contextPath}/css/bootstrap-material.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/css/myStyle.css" rel="stylesheet" type="text/css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body  style="font-size: 15px">
+        <h:form id="head">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                <a class="navbar-brand" href="#"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mr-auto">
+
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li classs="nav-item active">
+                            <b:commandButton action="#{userModel.logout()}" value="Logout"  class="btn btn-info"/>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </h:form>
+        <div class="row col" >
+            <div class="col-md-2" id="sideBar">
+                <div id="container" class="sidelinks">
+                    <ul class="nav-item">
+                        <li id="hotel"><a href="#">Manage Hotel</a></li>
+                        <li id="rooms"><a href="#">Manage Rooms</a></li>
+                        <li id="booking"><a href="#">Booking List</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2" >
+                
+            </div>
+            <div class="col">
+                <div class="container-fluid" id="container"> 
+                    <p:messages autoUpdate="true" closable="true" for="crecod" globalOnly="true"  />
+                    <section id="courseAdd">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="card">
+                                    <div class="card-header">Record Hotel</div>
+                                    <div class="card-body">
+                                        <h:form id="crecod">
+                                            <p:panel toggleable="true"  id="record">
+                                                <h:panelGrid columns="3" style="width: 100%;">
+                                                    <label>Hotel Name</label>
+                                                    <b:inputText id="un" style="height: 30px" value="#{hotelModel.hotel.name}" required="true" required-message="Required"/>
+                                                    <b:message for="un"/>
+                                                    <label>Hotel Email</label>
+                                                    <b:inputText type="email" id="e" style="height: 30px" value="#{hotelModel.hotel.email}" required="true" required-message="Required"/>
+                                                    <b:message for="e"/>
+                                                    <label>Hotel Phone Number</label>
+                                                    <b:inputText id="pn" style="height: 30px" value="#{hotelModel.hotel.phone}" required="true" required-message="Required"/>
+                                                    <b:message for="pn"/>
+                                                    <label>Province Location</label>
+                                                    <b:selectOneMenu id="p" value="#{districtModel.pid}" required="true" style="height: 30px" required-message="Required">
+                                                        <f:selectItem itemLabel="--Select Province--" />
+                                                        <f:selectItems value="#{provinceModel.provinces}" var="pr" itemLabel="#{pr.provincename}"  itemValue="#{pr.provincecode}"/>
+                                                        <f:ajax render="d" listener="#{districtModel.byProvince()}"/>
+                                                    </b:selectOneMenu>
+                                                    <b:message for="p"/>
+                                                    <label>District Location</label>
+                                                    <b:selectOneMenu value="#{hotelModel.dist}"
+                                                                     id="d" required="true" style="height: 30px" required-message="This is Required">
+                                                        <f:selectItems value="#{districtModel.ds}" var="dist" itemLabel="#{dist.namedistrict}"/>                            
+                                                    </b:selectOneMenu>
+                                                    <b:message for="d" autoUpdate="true"/>
+                                                    <td><b:commandButton class="btn btn-primary" value="Record" action="#{hotelModel.recordhotel()}" update="rrecord,courses,crecod"></b:commandButton></td>
+                                                </h:panelGrid>
+                                            </p:panel>
+                                        </h:form>  
+                                    </div>
+                                    <div class="card-footer"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h:form id="courses">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col">Hotels List</div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <b:dataTable value="#{hotelModel.hotels}" var="u" searching="true" columnVisibility="true" pdf="true" excel="true">
+                                                <b:dataTableColumn value="#{u.name}" label="Hotel Name"/>
+                                                <b:dataTableColumn value="#{u.email}" label="Hotel Email"/>
+                                                <b:dataTableColumn value="#{u.phone}" label="Hotel Phone"/>
+                                                <b:dataTableColumn value="#{u.address.province.provincename}" label="Province Location"/>
+                                                <b:dataTableColumn value="#{u.address.namedistrict}" label="District"/>
+                                                <b:dataTableColumn label="Edit">
+                                                    <b:commandButton action="#{hotelModel.setupdate(u)}" class="btn btn-info" update="crecod" value="Edit"></b:commandButton>
+                                                </b:dataTableColumn>
+                                            </b:dataTable>
+
+                                        </div>
+                                        <div class="card-footer"></div>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="hotelRoom" class="mt-5">
+                        <p:messages autoUpdate="true" closable="true" for="rrecord" globalOnly="true"  />
+                        <div class="row">                        
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Record New Room
+                                    </div>
+                                    <div class="card-body">
+                                        <h:form id="rrecord">
+                                            <p:panel toggleable="true" id="record">
+                                                <h:panelGrid columns="3">
+                                                    <label>Room Number</label>
+                                                    <b:inputText id="un" type="number" style="height: 30px" value="#{roomModel.room.roomno}" required="true" required-message="Required"/>
+                                                    <b:message for="un"/>
+                                                    <label for="ds">Room Description</label>
+                                                    <b:inputTextarea  id="ds" rows="3" value="#{roomModel.room.description}" required="true" required-message="Required" />
+                                                    <b:message for="ds"/>
+                                                    <label>Room Price Rwf</label>
+                                                    <b:inputText id="rp" style="height: 30px" value="#{roomModel.room.price}" required="true" required-message="Required"/>
+                                                    <b:message for="rp"/>
+                                                    <label>Hotel</label>
+                                                    <b:selectOneMenu value="#{roomModel.dist}"
+                                                                     id="d" required="true" style="height: 30px" required-message="This is Required">
+                                                        <f:selectItems value="#{hotelModel.hotels}" var="dist" itemLabel="#{dist.name}"/>                            
+                                                    </b:selectOneMenu>
+                                                    <b:message for="d" autoUpdate="true"/>
+                                                    <td><b:commandButton class="btn btn-primary" value="Record" action="#{roomModel.recordRoom()}" update="roomList,rrecord"></b:commandButton></td>
+                                                </h:panelGrid>
+                                            </p:panel>
+                                        </h:form>
+                                    </div>
+                                    <div class="card-footer">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h:form id="roomList">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col">Room</div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <b:dataTable value="#{roomModel.rooms}" var="u" columnVisibility="true" searching="true" pdf="true" excel="true">
+                                                <b:dataTableColumn value="#{u.roomno}" label="Room Number"/>
+                                                <b:dataTableColumn value="#{u.description}" label="Description"/>
+                                                <b:dataTableColumn value="#{u.price} RWF" label="Price " />
+                                                <b:dataTableColumn value="#{u.hotel.name}" label="Hotel"/>           
+                                                <b:dataTableColumn label="Edit">
+                                                    <b:commandButton action="#{roomModel.setupdate(u)}" class="btn btn-info" update="rrecord" value="Edit"></b:commandButton>
+                                                </b:dataTableColumn>
+                                            </b:dataTable>
+
+                                        </div>
+                                        <div class="card-footer"></div>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="book">
+                        <div class="row">
+                            <div class="col">
+                               <h:form id="bookings">
+                            <div class="card">
+                                <div class="card-header bg-info">
+                                    <div class="row">
+                                        <div class="col">Booking Lists</div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <b:dataTable value="#{bookingModel.bookings}" var="u" searching="true" pdf="true" csv="true" excel="true">
+                                        <b:dataTableColumn value="" label="Client Name">
+                                            <b:label value="#{u.customer.fname}"/>
+                                            <b:label value="#{u.customer.lname}"/>
+                                        </b:dataTableColumn>
+                                        <b:dataTableColumn value="#{u.rooms.hotel.name}" label="Hotel"/>
+                                        <b:dataTableColumn value="#{u.rooms}" label="Room Number"/>
+                                        <b:dataTableColumn value="#{u.stayindays}" label="Day room is Ocupied"/>
+                                        <b:dataTableColumn value="#{u.checkingdate}" label="Date Entered"/>
+                                    </b:dataTable>
+
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
+                        </h:form>
+    
+                            </div>
+                            
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <script src="#{request.contextPath}/js/jquery-2.2.2.js" type="text/javascript"></script>
+        <script src="#{request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="#{request.contextPath}/js/Myjs.js" type="text/javascript"></script>
+    </h:body>
+</html>

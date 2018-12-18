@@ -7,7 +7,6 @@ package model;
 
 import config.Message;
 import dao.UserDao;
-import domain.Sector;
 import domain.Users;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,8 +25,8 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class UserModel {
-    private String code;
+public class UserModel{
+    private String username;
     private String password;
     private List<Users> users=new UserDao().findAll(Users.class);
     private Users user=new Users();
@@ -35,7 +34,16 @@ public class UserModel {
     private String search;
     private String userdetails;
     private String sid;
+    private String id;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     public String getSid() {
         return sid;
     }
@@ -77,15 +85,15 @@ public class UserModel {
     public void setSearch(String search) {
         this.search = search;
     }
-    
-    public String getCode() {
-        return code;
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setUsername(String username) {
+        this.username = username;
     }
-
+  
     public String getPassword() {
         return password;
     }
@@ -138,12 +146,8 @@ public class UserModel {
     }
     
     public void recordUser(){
-        Sector s=new Sector();
-        s.setSectorcode(dic);
         try{
-            user.setStatus("active");
-            user.setSector(s);
-            user.setType("Student");
+             user.setType("customer");
              String msg=new UserDao().create(user);
             user=new Users();
             users=new UserDao().findAll(Users.class);
@@ -153,7 +157,11 @@ public class UserModel {
         }
         
     }
-     
+    
+     public void setDetails(Users u){
+      user=u;
+    }
+    
      public void updateUser(){
         try{
              String msg=new UserDao().update(userDetails);
@@ -191,14 +199,14 @@ public class UserModel {
             userdetails=user.getType()+":  "+user.getFname()+" "+user.getLname()+" ";
             sid=user.getId();
             switch (user.getType()) {
-                case "Admin":
+                case "admin":
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("session", user);
-                     ec.redirect(ec.getRequestContextPath() + "/pages/adminPages/home.xhtml");
-                    return "pages/adminPages/home.xhtml?faces-redirect=true";
-                case "Student":
+                     ec.redirect(ec.getRequestContextPath() + "/pages/adminPages/hotelPage.xhtml");
+                    return "pages/adminPages/hotelPage.xhtml?faces-redirect=true";
+                case "customer":
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("session", user);
-                    ec.redirect(ec.getRequestContextPath() + "/pages/studentPage/coursepage.xhtml");
-                    return "pages/studentPages/coursepage.xhtml?faces-redirect=true";
+                    ec.redirect(ec.getRequestContextPath() + "/pages/customerPage/customerPage.xhtml");
+                    return "pages/customerPage/customerPage.xhtml?faces-redirect=true";
                 default:
                     user=null;
                     
@@ -207,7 +215,7 @@ public class UserModel {
                     } catch (IOException ex) {
                         Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    return "/SRSR/pages/login.xhtml";
+                    return "/HMS/pages/login.xhtml";
             }
                   
         }else{
@@ -218,7 +226,7 @@ public class UserModel {
     }
     
     public void findUser(){
-        List<Users> usersLogin=new UserDao().login(code, password);
+        List<Users> usersLogin=new UserDao().login(username, password);
         
         if(!usersLogin.isEmpty()){
             for(Users u: usersLogin){
@@ -238,7 +246,6 @@ public class UserModel {
     
       public void activate(Users u){
         try{
-              u.setStatus("active");
              String msg=new UserDao().update(u);
             users=new UserDao().findAll(Users.class);
              FacesContext.getCurrentInstance().addMessage("users", new FacesMessage(msg, ""));
@@ -249,7 +256,6 @@ public class UserModel {
     }
         public void block(Users u){
         try{
-            u.setStatus("block");
              String msg=new UserDao().update(u);
             users=new UserDao().findAll(Users.class);
              FacesContext.getCurrentInstance().addMessage("users", new FacesMessage(msg, ""));

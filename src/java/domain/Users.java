@@ -23,81 +23,43 @@ import javax.persistence.Temporal;
 @Entity
 public class Users implements Serializable {
 
-    @OneToOne(mappedBy = "dean")
-    private Faculty faculty;
-
-    public Faculty getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
-    
+    @OneToMany(mappedBy = "customer")
+    private List<Booking> bookings;
     @Id 
-   private String id;
+   private String id=UUID.randomUUID().toString();
    private String fname;
    private String lname;
    private String phone;
-   private String pasword;
-   private String status;
+   private String password;
     @Temporal(javax.persistence.TemporalType.DATE)
    private Date dob; 
-   @ManyToOne
-   private Department department;
-    @OneToMany(mappedBy = "student")
-   private List<CourseSelection> courseSelection;
-    @ManyToOne
-    private Sector sector;
-    private String type;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getPasword() {
-        return pasword;
-    }
-
-    public void setPasword(String pasword) {
-        this.pasword = pasword;
-    }
-
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Sector getSector() {
-        return sector;
-    }
-
-    public void setSector(Sector sector) {
-        this.sector = sector;
-    }
-   
+   private String type;
+   private String address;
+   private String username;
     public String getId() {
         return id;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setId(String id) {
         this.id = id;
     }
+
     public String getFname() {
         return fname;
     }
@@ -122,21 +84,36 @@ public class Users implements Serializable {
         this.phone = phone;
     }
 
-    public Department getDepartment() {
-        return department;
+    public String getPassword() {
+        return password;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public List<CourseSelection> getCourseSelection() {
-        return courseSelection;
+    public Date getDob() {
+        return dob;
     }
 
-    public void setCourseSelection(List<CourseSelection> courseSelection) {
-        this.courseSelection = courseSelection;
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
-   
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
    
 }
