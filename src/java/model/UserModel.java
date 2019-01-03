@@ -147,11 +147,15 @@ public class UserModel{
     
     public void recordUser(){
         try{
+            if(user.getPassword().equals(password)){
              user.setType("customer");
              String msg=new UserDao().create(user);
             user=new Users();
             users=new UserDao().findAll(Users.class);
              Message.succes(msg, "");
+            }else{
+               Message.failure("Confirm Password", "");
+            }
         }catch(Exception ex){
               Message.failure(ex.getLocalizedMessage(), "");
         }

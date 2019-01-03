@@ -3,16 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/G:/IMP/STD/Projects/alixe/HMS/web/pages/login.xhtml</file>
-            <file>file:/G:/IMP/STD/Projects/alixe/HMS/src/java/domain/District.java</file>
-            <file>file:/G:/IMP/STD/Projects/alixe/HMS/src/java/dao/HotelDao.java</file>
-            <file>file:/G:/IMP/STD/Projects/alixe/HMS/web/pages/adminPages/hotelPage.xhtml</file>
-            <file>file:/G:/IMP/STD/Projects/alixe/HMS/src/java/model/HotelModel.java</file>
-            <file>file:/G:/IMP/STD/Projects/alixe/HMS/src/java/domain/Province.java</file>
-            <file>file:/G:/IMP/STD/Projects/alixe/HMS/src/java/domain/Hotel.java</file>
-            <file>file:/G:/IMP/STD/Projects/alixe/HMS/src/java/dao/UserDao.java</file>
-            <file>file:/G:/IMP/STD/Projects/alixe/HMS/src/java/model/UserModel.java</file>
-            <file>file:/G:/IMP/STD/Projects/alixe/HMS/web/js/Myjs.js</file>
+            <file>file:/G:/IMP/STD/Projects/alixe/HMS/web/pages/customerPage/customerPage.xhtml</file>
         </group>
     </open-files>
 </project-private>

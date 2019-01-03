@@ -72,7 +72,7 @@ and open the template in the editor.
                                             <label>When to take The Room</label>
                                             <b:datepicker id="cd" style="height: 30px" value="#{bookingModel.booking.checkingdate}" required="true" required-message="Required"/>
                                             <b:message for="cd"/>
-                                            <label>Staying Date</label>
+                                            <label>Staying Days</label>
                                             <b:inputText type="number" id="sd" style="height: 30px" value="#{bookingModel.booking.stayindays}" required="true" required-message="Required"/>
                                             <b:message for="sd"/>
                                         </h:panelGrid>
@@ -92,7 +92,7 @@ and open the template in the editor.
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <b:dataTable value="#{bookingModel.bookings}" var="u" searching="true" pdf="true" csv="true">
+                                    <b:dataTable value="#{bookingModel.bookings}" var="u" searching="true" pdf="true" csv="true" excel="true" column-visibility="true">
                                         <b:dataTableColumn value="#{u.rooms.hotel.name}" label="Hotel"/>
                                         <b:dataTableColumn value="#{u.rooms}" label="Room Number"/>
                                         <b:dataTableColumn value="#{u.stayindays}" label="Day room is Ocupied"/>
@@ -120,7 +120,7 @@ and open the template in the editor.
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <b:dataTable value="#{hotelModel.hotels}" var="u" searching="true" pdf="true" csv="true">
+                                    <b:dataTable value="#{hotelModel.hotels}" var="u" searching="true" pdf="true" csv="true" excel="true" column-visibility="true">
                                         <b:dataTableColumn value="#{u.name}" label="Hotel Name"/>
                                         <b:dataTableColumn value="#{u.email}" label="Hotel Email"/>
                                         <b:dataTableColumn value="#{u.phone}" label="Hotel Phone"/>
@@ -146,7 +146,7 @@ and open the template in the editor.
                                 </div>
                                 <div class="card-body">
 
-                                    <b:dataTable value="#{roomModel.rooms}" var="k" searching="true" pdf="true" csv="true">
+                                    <b:dataTable value="#{roomModel.rooms}" var="k" searching="true" pdf="true" csv="true" excel="true" column-visibility="true">
                                         <b:dataTableColumn value="#{k.roomno}" label="Room Number"/>
                                         <b:dataTableColumn value="#{k.description}" label="Description"/>
                                         <b:dataTableColumn value="#{k.price} RWF" label="Price" />
